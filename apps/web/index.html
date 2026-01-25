@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cancord</title>
+
+  <link rel="stylesheet" href="./styles/dark.css" />
+  <link rel="icon" type="image/x-icon" href="./favicon.jpg">
+
+  <!-- socket.io client -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+  <div class="app">
+
+    <aside class="sidebar">
+      <h2>CONNECTED_NODES</h2>
+      <div id="users"></div>
+    </aside>
+
+    <main class="main">
+
+      <!-- 🔴 SCREEN SHARE AREA -->
+      <div id="screenContainer">
+        <video id="screenVideo" autoplay muted></video>
+      </div>
+
+      <div class="controls">
+        <button id="micBtn">🎤 Mic</button>
+        <button id="screenBtn">🖥️ Screen</button>
+      </div>
+    </main>
+
+    <section class="chat">
+      <div id="messages" class="messages"></div>
+      <div class="input">
+        <input id="chatInput" placeholder="type_message..." />
+        <button id="sendBtn">&gt;</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
