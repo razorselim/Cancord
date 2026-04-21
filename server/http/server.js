@@ -17,7 +17,7 @@ async function initDB() {
     driver: sqlite3.Database
   });
   
-  // Mesajlar tablosu
+  // Mesajlar tablosunu oluştur
   await db.exec(`
     CREATE TABLE IF NOT EXISTS messages (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,18 +28,7 @@ async function initDB() {
     )
   `);
   
-  // KULLANICILAR TABLOSU (YENİ)
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT UNIQUE NOT NULL,
-      password TEXT NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      last_seen DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
-  
-  console.log("✅ SQLite veritabanı hazır (users + messages)");
+  console.log("✅ SQLite veritabanı hazır");
 }
 
 // Veritabanını başlat
