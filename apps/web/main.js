@@ -1,4 +1,4 @@
-// main.js - TAM VE ÇALIŞAN VERSİYON
+// main.js - SADECE NO SIGNAL DÜZELTİLDİ
 console.log("CLIENT ONLINE - Screen Share WORKING VERSION");
 
 const socket = io();
@@ -144,32 +144,6 @@ async function initPeer() {
     
     if (track.kind === "video") {
       displayRemoteScreen(stream, "Remote User");
-      function displayRemoteScreen(stream, username) {
-  console.log("🎬 Showing remote screen in main video:", username);
-
-  // ANA VIDEOYA BAS
-  screenVideo.srcObject = stream;
-  screenVideo.muted = false; // karşı tarafın sesi varsa duy
-
-  // UI aktif et
-  screenContainer.classList.add("active");
-  screenVideo.classList.add("active");
-
-  // NO SIGNAL gizle
-  const noSignalDiv = document.querySelector('.no-signal');
-  if (noSignalDiv) noSignalDiv.style.display = 'none';
-
-  // stream bittiğinde geri al
-  stream.getVideoTracks()[0].onended = () => {
-    console.log("📴 Remote screen ended");
-
-    screenVideo.srcObject = null;
-    screenVideo.classList.remove("active");
-    screenContainer.classList.remove("active");
-
-    if (noSignalDiv) noSignalDiv.style.display = 'flex';
-  };
-}
     }
     if (track.kind === "audio") {
       const audio = document.createElement("audio");
@@ -216,7 +190,7 @@ async function startCall() {
   }
 }
 
-// ========== SCREEN SHARE - FIXED ==========
+// ========== SCREEN SHARE ==========
 screenBtn.onclick = async () => {
   if (isSharingScreen) {
     await stopScreenSharing();
@@ -229,7 +203,6 @@ async function startScreenSharing() {
   try {
     console.log("🚀 Starting screen share...");
     
-    // Maksimum kalite
     screenStream = await navigator.mediaDevices.getDisplayMedia({
       video: {
         cursor: "always",
@@ -253,14 +226,12 @@ async function startScreenSharing() {
     const noSignalDiv = document.querySelector('.no-signal');
     if (noSignalDiv) noSignalDiv.style.display = 'none';
     
-    // Make sure peer connection exists
     if (!peerConnection) {
       await initPeer();
       await startCall();
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
     
-    // Add or replace track
     const senders = peerConnection.getSenders();
     let videoSender = senders.find(s => s.track && s.track.kind === "video");
     
@@ -280,7 +251,6 @@ async function startScreenSharing() {
       stopScreenSharing();
     };
     
-    // Renegotiate
     if (peerConnection.signalingState === "stable") {
       await sendRenegotiationOffer();
     }
@@ -309,9 +279,17 @@ async function stopScreenSharing() {
   screenVideo.classList.remove("active");
   screenContainer.classList.remove("active");
   
-  // Show NO SIGNAL again
+  // Show NO SIGNAL again - TAM ORTADA
   const noSignalDiv = document.querySelector('.no-signal');
-  if (noSignalDiv) noSignalDiv.style.display = 'flex';
+  if (noSignalDiv) {
+    noSignalDiv.style.display = 'flex';
+    noSignalDiv.style.position = 'absolute';
+    noSignalDiv.style.top = '50%';
+    noSignalDiv.style.left = '50%';
+    noSignalDiv.style.transform = 'translate(-50%, -50%)';
+    noSignalDiv.style.width = '100%';
+    noSignalDiv.style.textAlign = 'center';
+  }
   
   if (screenSender) {
     try {
@@ -349,210 +327,37 @@ async function sendRenegotiationOffer() {
   }
 }
 
-// ========== REMOTE SCREEN - VIEWER SIDE WITH FULLSCREEN BUTTON ==========
+// ========== REMOTE SCREEN (İZLEYİCİ) ==========
 function displayRemoteScreen(stream, username) {
   console.log("🎬 Displaying remote screen for viewer:", username);
   
-  const containerId = `remote-screen-${username.replace(/\s+/g, '-')}`;
-  let container = document.getElementById(containerId);
-  let video;
+  // ANA EKRANDA GÖSTER
+  screenVideo.srcObject = stream;
+  screenVideo.muted = false;
+  screenContainer.classList.add("active");
+  screenVideo.classList.add("active");
   
-  // Eğer varsa güncelle
-  if (container) {
-    video = container.querySelector('video');
-    if (video) {
-      video.srcObject = stream;
-      container.style.display = 'flex';
-      // NO SIGNAL yazısını gizle
-      const noSignalOverlay = container.querySelector('.no-signal-overlay');
-      if (noSignalOverlay) noSignalOverlay.style.display = 'none';
-      return;
-    }
-  }
+  // NO SIGNAL gizle
+  const noSignalDiv = document.querySelector('.no-signal');
+  if (noSignalDiv) noSignalDiv.style.display = 'none';
   
-  // YENİ CONTAINER
-  container = document.createElement("div");
-  container.id = containerId;
-  container.style.cssText = `
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    background: #000 !important;
-    z-index: 9999 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-  `;
-  
-  // NO SIGNAL overlay (başlangıçta görünür)
-  const noSignalOverlay = document.createElement("div");
-  noSignalOverlay.className = "no-signal-overlay";
-  noSignalOverlay.style.cssText = `
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    background: #000 !important;
-    z-index: 10001 !important;
-    font-family: monospace !important;
-  `;
-  
-  const noSignalText = document.createElement("div");
-  noSignalText.style.cssText = `
-    font-size: 32px !important;
-    letter-spacing: 8px !important;
-    color: #333 !important;
-    margin-bottom: 12px !important;
-  `;
-  noSignalText.textContent = "NO SIGNAL";
-  
-  const noSignalSub = document.createElement("div");
-  noSignalSub.style.cssText = `
-    font-size: 12px !important;
-    color: #222 !important;
-  `;
-  noSignalSub.textContent = "waiting for stream...";
-  
-  noSignalOverlay.appendChild(noSignalText);
-  noSignalOverlay.appendChild(noSignalSub);
-  
-  // Video elementi
-  video = document.createElement("video");
-  video.autoplay = true;
-  video.playsInline = true;
-  video.style.cssText = `
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-    background: #000 !important;
-  `;
-  video.srcObject = stream;
-  
-  // Video başlayınca NO SIGNAL'i gizle
-  video.onplaying = () => {
-    console.log("▶️ Video playing, hiding NO SIGNAL");
-    if (noSignalOverlay) {
-      noSignalOverlay.style.opacity = '0';
-      setTimeout(() => {
-        noSignalOverlay.style.display = 'none';
-      }, 500);
-    }
-  };
-  
-  // TAM EKRAN BUTONU (sağ altta)
-  const fullscreenBtn = document.createElement("button");
-  fullscreenBtn.innerHTML = "⛶";
-  fullscreenBtn.title = "Full Screen";
-  fullscreenBtn.style.cssText = `
-    position: fixed !important;
-    bottom: 20px !important;
-    right: 20px !important;
-    width: 48px !important;
-    height: 48px !important;
-    background: rgba(0,0,0,0.6) !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    border-radius: 12px !important;
-    color: #fff !important;
-    font-size: 24px !important;
-    cursor: pointer !important;
-    z-index: 10002 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.2s ease !important;
-    font-family: monospace !important;
-  `;
-  
-  fullscreenBtn.onmouseover = () => {
-    fullscreenBtn.style.background = 'rgba(0,0,0,0.8)';
-    fullscreenBtn.style.transform = 'scale(1.05)';
-  };
-  fullscreenBtn.onmouseout = () => {
-    fullscreenBtn.style.background = 'rgba(0,0,0,0.6)';
-    fullscreenBtn.style.transform = 'scale(1)';
-  };
-  fullscreenBtn.onclick = () => {
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
-    } else if (video.webkitRequestFullscreen) {
-      video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) {
-      video.msRequestFullscreen();
-    }
-  };
-  
-  // Kapatma butonu (sağ üstte)
-  const closeBtn = document.createElement("button");
-  closeBtn.innerHTML = "✕";
-  closeBtn.title = "Close";
-  closeBtn.style.cssText = `
-    position: fixed !important;
-    top: 20px !important;
-    right: 20px !important;
-    width: 40px !important;
-    height: 40px !important;
-    background: rgba(255,51,51,0.8) !important;
-    border: none !important;
-    border-radius: 8px !important;
-    color: #fff !important;
-    font-size: 18px !important;
-    cursor: pointer !important;
-    z-index: 10002 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.2s ease !important;
-  `;
-  
-  closeBtn.onmouseover = () => {
-    closeBtn.style.background = 'rgba(255,51,51,1)';
-    closeBtn.style.transform = 'scale(1.05)';
-  };
-  closeBtn.onmouseout = () => {
-    closeBtn.style.background = 'rgba(255,51,51,0.8)';
-    closeBtn.style.transform = 'scale(1)';
-  };
-  closeBtn.onclick = () => {
-    container.remove();
-    const tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
-  };
-  
-  // Container'a ekle
-  container.appendChild(video);
-  container.appendChild(noSignalOverlay);
-  container.appendChild(fullscreenBtn);
-  container.appendChild(closeBtn);
-  
-  document.body.appendChild(container);
-  
-  // Stream bittiğinde
-  stream.onremovetrack = () => {
-    console.log("📹 Stream ended");
-    if (noSignalOverlay) {
-      noSignalOverlay.style.display = 'flex';
-      noSignalOverlay.style.opacity = '1';
-      noSignalText.textContent = "STREAM ENDED";
-      noSignalSub.textContent = "screen share stopped";
-    }
-    setTimeout(() => {
-      if (container && container.parentNode && !stream.active) {
-        container.remove();
+  // Stream bittiğinde geri al
+  const videoTrack = stream.getVideoTracks()[0];
+  if (videoTrack) {
+    videoTrack.onended = () => {
+      console.log("📴 Remote screen ended");
+      screenVideo.srcObject = null;
+      screenVideo.classList.remove("active");
+      screenContainer.classList.remove("active");
+      if (noSignalDiv) {
+        noSignalDiv.style.display = 'flex';
+        noSignalDiv.style.position = 'absolute';
+        noSignalDiv.style.top = '50%';
+        noSignalDiv.style.left = '50%';
+        noSignalDiv.style.transform = 'translate(-50%, -50%)';
       }
-    }, 3000);
-  };
-  
-  console.log("✅ Remote screen display ready with fullscreen button");
-  return container;
+    };
+  }
 }
 
 // Microphone Toggle
@@ -611,9 +416,7 @@ socket.on("room:peers", (users) => {
   updateUserCount(users.length);
 });
 
-// ======================
-// SPOTIFY JAM BUTONU
-// ======================
+// ========== SPOTIFY JAM BUTONU ==========
 const spotifyBtn = document.createElement('button');
 spotifyBtn.textContent = '🎵 Spotify Jam';
 spotifyBtn.id = 'spotifyJamBtn';
@@ -641,17 +444,14 @@ spotifyBtn.onmouseout = () => {
 
 spotifyBtn.onclick = () => {
     window.open('https://open.spotify.com/jam', '_blank');
-    addMessage('system', '🎧 Spotify Jam açıldı! Spotify\'dan "Create Jam" butonuna tıklayarak oda oluşturabilirsin.');
+    addMessage('system', '🎧 Spotify Jam açıldı!');
 };
 
-// Butonu ekle (mikrofon butonunun yanına)
 const micBtnElement = document.getElementById('micBtn');
 if (micBtnElement) {
     micBtnElement.parentNode.appendChild(spotifyBtn);
 } else {
     document.querySelector('.controls').appendChild(spotifyBtn);
 }
-
-console.log("✅ Spotify Jam butonu eklendi");
 
 console.log("🎮 App ready. Username:", username);

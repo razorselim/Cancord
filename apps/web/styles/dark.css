@@ -1,5 +1,5 @@
-/* dark.css - 4 THEMES: TERMINAL | WHITE | AVIATION | CASINO */
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+/* dark.css - NO SIGNAL KESİN ÇÖZÜM */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
 * {
   margin: 0;
@@ -8,10 +8,10 @@
 }
 
 body {
-  font-family: 'Space Mono', 'Courier New', monospace;
+  font-family: 'Space Mono', monospace;
   height: 100vh;
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
 }
 
 .app {
@@ -20,236 +20,27 @@ body {
   height: 100%;
 }
 
-/* ============================================
-   TEMA 1: TERMINAL (yeşil siyah)
-============================================ */
-body.theme-terminal {
-  background: #0a0a0a;
-  color: #0f0;
+/* ========== TEMA DEĞİŞKENLERİ ========== */
+body.theme-terminal { --color: #0f0; --bg: #050505; --border: #0f0; }
+body.theme-white { --color: #000; --bg: #f5f5f5; --border: #000; }
+body.theme-aviation { --color: #ffcc00; --bg: #0d2f40; --border: #ffcc00; }
+body.theme-casino { --color: #ffd700; --bg: #0a0000; --border: #ffd700; }
+
+body.theme-terminal { background: #0a0a0a; color: var(--color); }
+body.theme-white { background: #fff; color: var(--color); }
+body.theme-aviation { background: #0a2a3a; color: var(--color); }
+body.theme-casino { background: #1a0000; color: var(--color); }
+
+.sidebar, .chat, .main {
+  background: var(--bg);
 }
 
-body.theme-terminal .sidebar,
-body.theme-terminal .chat,
-body.theme-terminal .main {
-  background: #050505;
-}
-
-body.theme-terminal .ctrl-btn {
-  border-color: #0f0;
-  color: #0f0;
-}
-
-body.theme-terminal .ctrl-btn:hover {
-  background: #0f0;
-  color: #000;
-}
-
-body.theme-terminal .message.me {
-  color: #0f0;
-  border-right-color: #0f0;
-}
-
-body.theme-terminal .logo-symbol {
-  color: #0f0;
-}
-
-body.theme-terminal .theme-btn.active {
-  border-color: #0f0;
-  color: #0f0;
-}
-
-/* ============================================
-   TEMA 2: WHITE (beyaz siyah)
-============================================ */
-body.theme-white {
-  background: #ffffff;
-  color: #000000;
-}
-
-body.theme-white .sidebar,
-body.theme-white .chat,
-body.theme-white .main {
-  background: #f5f5f5;
-  border-color: #e0e0e0;
-}
-
-body.theme-white .ctrl-btn {
-  border-color: #000;
-  color: #000;
-}
-
-body.theme-white .ctrl-btn:hover {
-  background: #000;
-  color: #fff;
-}
-
-body.theme-white .message.me {
-  color: #000;
-  border-right-color: #000;
-}
-
-body.theme-white .message.other {
-  color: #555;
-}
-
-body.theme-white .logo-symbol {
-  color: #000;
-}
-
-body.theme-white .theme-btn.active {
-  border-color: #000;
-  color: #000;
-}
-
-body.theme-white .user-list div {
-  border-left-color: #000;
-}
-
-/* ============================================
-   TEMA 3: AVIATION (gökyüzü mavi + pilot)
-============================================ */
-body.theme-aviation {
-  background: #0a2a3a;
-  color: #ffcc00;
-}
-
-body.theme-aviation .sidebar,
-body.theme-aviation .chat,
-body.theme-aviation .main {
-  background: #0d2f40;
-  border: 1px solid #ffcc00;
-}
-
-body.theme-aviation .logo {
-  background: #ffcc00;
-  color: #0a2a3a;
-  padding: 8px 12px;
-  border-radius: 4px;
-}
-
-body.theme-aviation .logo-symbol {
-  color: #0a2a3a;
-}
-
-body.theme-aviation .ctrl-btn {
-  border: 2px solid #ffcc00;
-  color: #ffcc00;
-  background: transparent;
-  letter-spacing: 1px;
-}
-
-body.theme-aviation .ctrl-btn:hover {
-  background: #ffcc00;
-  color: #0a2a3a;
-  transform: scale(1.02);
-}
-
-body.theme-aviation .message.me {
-  color: #ffcc00;
-  border-right: 3px solid #ffcc00;
-}
-
-body.theme-aviation .message.other {
-  color: #88ddff;
-}
-
-body.theme-aviation .user-list div {
-  border-left: 2px solid #ffcc00;
-}
-
-body.theme-aviation .peer-badge {
-  background: #ffcc00;
-  color: #0a2a3a;
-}
-
-body.theme-aviation .theme-btn.active {
-  border-color: #ffcc00;
-  color: #ffcc00;
-}
-
-body.theme-aviation .stat-dot {
-  background: #ffcc00;
-}
-
-/* ============================================
-   TEMA 4: CASINO (kırmızı siyah altın)
-============================================ */
-body.theme-casino {
-  background: #1a0000;
-  color: #ffd700;
-}
-
-body.theme-casino .sidebar,
-body.theme-casino .chat,
-body.theme-casino .main {
-  background: #0a0000;
-  border: 1px solid #ffd700;
-  box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.05);
-}
-
-body.theme-casino .logo {
-  background: #ffd700;
-  color: #1a0000;
-  padding: 8px 12px;
-  border-radius: 4px;
-}
-
-body.theme-casino .logo-symbol {
-  color: #1a0000;
-}
-
-body.theme-casino .ctrl-btn {
-  border: 2px solid #ffd700;
-  color: #ffd700;
-  background: #1a0000;
-}
-
-body.theme-casino .ctrl-btn:hover {
-  background: #ffd700;
-  color: #1a0000;
-  box-shadow: 0 0 15px #ffd700;
-}
-
-body.theme-casino .message.me {
-  color: #ffd700;
-  border-right: 3px solid #ffd700;
-}
-
-body.theme-casino .message.other {
-  color: #ff8888;
-}
-
-body.theme-casino .user-list div {
-  border-left: 2px solid #ffd700;
-}
-
-body.theme-casino .peer-badge {
-  background: #ffd700;
-  color: #1a0000;
-}
-
-body.theme-casino .theme-btn.active {
-  border-color: #ffd700;
-  color: #ffd700;
-}
-
-body.theme-casino .stat-dot {
-  background: #ffd700;
-}
-
-body.theme-casino .no-signal-text {
-  text-shadow: 0 0 10px #ffd700;
-}
-
-/* ============================================
-   ORTAK STİLLER
-============================================ */
+/* ========== SIDEBAR ========== */
 .sidebar {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  overflow-y: auto;
-  border-right: 1px solid currentColor20;
+  border-right: 1px solid var(--border);
 }
 
 .logo {
@@ -258,75 +49,32 @@ body.theme-casino .no-signal-text {
   gap: 8px;
   margin-bottom: 24px;
   font-weight: 700;
-  font-size: 18px;
 }
 
-.logo-symbol {
-  font-size: 24px;
-}
-
-.logo-version {
-  font-size: 9px;
-  opacity: 0.5;
-  margin-left: auto;
-}
-
-.theme-panel {
-  margin-bottom: 20px;
-}
-
-.theme-label {
-  font-size: 10px;
-  opacity: 0.5;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-.theme-buttons {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
+/* Tema Seçici */
+.theme-panel { margin-bottom: 20px; }
+.theme-label { font-size: 10px; opacity: 0.5; margin-bottom: 10px; }
+.theme-buttons { display: flex; gap: 8px; margin-bottom: 6px; }
 .theme-btn {
-  width: 48px;
-  height: 36px;
+  width: 48px; height: 36px;
   background: transparent;
-  border: 1px solid currentColor30;
+  border: 1px solid var(--border);
   cursor: pointer;
   font-family: monospace;
-  font-size: 12px;
-  font-weight: 600;
-  transition: all 0.15s;
   color: inherit;
 }
+.theme-btn.active { border-width: 2px; }
+.theme-names { display: flex; gap: 8px; font-size: 8px; opacity: 0.4; }
+.theme-names span { width: 48px; text-align: center; }
 
-.theme-btn:hover {
-  transform: translateY(-2px);
+/* Kullanıcı listesi */
+.user-list { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.user-list div {
+  padding: 10px 12px;
+  border-left: 2px solid var(--color);
+  font-size: 12px;
 }
-
-.theme-btn.active {
-  border-width: 2px;
-}
-
-.theme-names {
-  display: flex;
-  gap: 8px;
-  font-size: 8px;
-  opacity: 0.4;
-  letter-spacing: 0.5px;
-}
-
-.theme-names span {
-  width: 48px;
-  text-align: center;
-}
-
-.divider {
-  height: 1px;
-  background: currentColor20;
-  margin: 16px 0;
-}
+.user-list div:hover { transform: translateX(4px); opacity: 0.8; }
 
 .stats {
   display: flex;
@@ -334,68 +82,24 @@ body.theme-casino .no-signal-text {
   margin-bottom: 20px;
   font-size: 11px;
 }
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
+.stat-item { display: flex; align-items: center; gap: 6px; }
 .stat-dot {
-  width: 8px;
-  height: 8px;
-  background: currentColor;
+  width: 8px; height: 8px;
+  background: var(--color);
   border-radius: 50%;
   animation: pulse 1.5s infinite;
 }
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-.user-list {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.user-list div {
-  padding: 10px 12px;
-  border-left: 2px solid currentColor;
-  font-size: 12px;
-  transition: 0.1s;
-}
-
-.user-list div:hover {
-  transform: translateX(4px);
-  opacity: 0.8;
-}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
 .sidebar-footer {
   margin-top: auto;
   padding-top: 20px;
-  border-top: 1px solid currentColor20;
+  border-top: 1px solid var(--border);
 }
+.connection { display: flex; align-items: center; gap: 8px; font-size: 10px; opacity: 0.5; }
+.pulse { width: 8px; height: 8px; background: var(--color); border-radius: 50%; animation: pulse 1.5s infinite; }
 
-.connection {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  opacity: 0.5;
-}
-
-.pulse {
-  width: 8px;
-  height: 8px;
-  background: currentColor;
-  border-radius: 50%;
-  animation: pulse 1.5s infinite;
-}
-
-/* MAIN */
+/* ========== MAIN ========== */
 .main {
   display: flex;
   flex-direction: column;
@@ -408,12 +112,10 @@ body.theme-casino .no-signal-text {
   margin-bottom: 12px;
   font-size: 11px;
   opacity: 0.6;
-  padding: 0 4px;
 }
-
 .peer-badge {
   padding: 2px 8px;
-  border: 1px solid currentColor;
+  border: 1px solid var(--color);
   border-radius: 4px;
   font-size: 9px;
 }
@@ -421,7 +123,7 @@ body.theme-casino .no-signal-text {
 #screenContainer {
   flex: 1;
   background: #000;
-  border: 1px solid currentColor20;
+  border: 1px solid var(--border);
   position: relative;
   min-height: 400px;
   display: flex;
@@ -429,27 +131,32 @@ body.theme-casino .no-signal-text {
   align-items: center;
 }
 
+/* ========== NO SIGNAL - KESİN ORTADA ========== */
 .no-signal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  width: 100%;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  text-align: center !important;
+  width: 100% !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
-
 .no-signal-text {
-  font-size: 32px;
+  font-size: 28px;
   letter-spacing: 6px;
   opacity: 0.3;
   display: block;
 }
-
 .no-signal-sub {
-  font-size: 11px;
+  font-size: 10px;
   opacity: 0.2;
   display: block;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 #screenVideo {
@@ -457,72 +164,56 @@ body.theme-casino .no-signal-text {
   max-height: 100%;
   display: none;
   object-fit: contain;
+  z-index: 20;
+}
+#screenVideo.active { 
+  display: block; 
 }
 
-#screenVideo.active {
-  display: block;
-}
-
+/* Butonlar */
 .controls {
   display: flex;
   gap: 12px;
   justify-content: center;
   margin: 20px 0;
 }
-
 .ctrl-btn {
   background: transparent;
-  border: 1px solid currentColor;
+  border: 1px solid var(--color);
   padding: 10px 20px;
   cursor: pointer;
   font-family: inherit;
   font-size: 12px;
-  font-weight: 600;
   display: flex;
   gap: 8px;
   align-items: center;
+  color: inherit;
   transition: all 0.15s;
-  color: inherit;
 }
-
-.ctrl-btn:hover {
-  transform: translateY(-2px);
-}
-
-.ctrl-btn.active {
-  background: currentColor;
-  color: inherit;
-}
+.ctrl-btn:hover { transform: translateY(-2px); background: var(--color); color: #000; }
+.ctrl-btn.active { background: var(--color); color: #000; }
 
 .sysinfo {
   display: flex;
   justify-content: space-between;
   font-size: 10px;
   opacity: 0.4;
-  border-top: 1px solid currentColor20;
+  border-top: 1px solid var(--border);
   padding-top: 12px;
-  margin-top: auto;
 }
 
-/* CHAT */
+/* ========== CHAT ========== */
 .chat {
   display: flex;
   flex-direction: column;
-  border-left: 1px solid currentColor20;
+  border-left: 1px solid var(--border);
 }
-
 .chat-header {
   padding: 20px;
-  border-bottom: 1px solid currentColor20;
+  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   font-size: 11px;
-  font-weight: 600;
-}
-
-.encrypt-badge {
-  font-size: 9px;
-  opacity: 0.5;
 }
 
 .messages {
@@ -533,49 +224,27 @@ body.theme-casino .no-signal-text {
   flex-direction: column;
   gap: 8px;
 }
-
 .message {
   padding: 8px 12px;
   font-size: 12px;
-  animation: fadeIn 0.15s ease;
+  animation: fadeIn 0.15s;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-.message.me {
-  text-align: right;
-  border-right: 2px solid currentColor;
-}
-
-.message.other {
-  border-left: 2px solid currentColor;
-  opacity: 0.8;
-}
-
-.message.system {
-  text-align: center;
-  font-style: italic;
-  font-size: 10px;
-  opacity: 0.4;
-}
+.message.me { text-align: right; border-right: 2px solid var(--color); }
+.message.other { border-left: 2px solid var(--color); opacity: 0.8; }
+.message.system { text-align: center; font-style: italic; font-size: 10px; opacity: 0.4; }
 
 .input-wrapper {
   display: flex;
   align-items: center;
-  border-top: 1px solid currentColor20;
+  border-top: 1px solid var(--border);
   padding: 12px 16px;
   gap: 8px;
 }
-
-.input-cursor {
-  font-weight: 700;
-  font-size: 14px;
-  opacity: 0.6;
-}
-
+.input-cursor { font-weight: 700; font-size: 14px; opacity: 0.6; }
 #chatInput {
   flex: 1;
   background: transparent;
@@ -585,11 +254,7 @@ body.theme-casino .no-signal-text {
   outline: none;
   color: inherit;
 }
-
-#chatInput::placeholder {
-  opacity: 0.3;
-}
-
+#chatInput::placeholder { opacity: 0.3; }
 .send-btn {
   background: transparent;
   border: none;
@@ -598,66 +263,26 @@ body.theme-casino .no-signal-text {
   color: inherit;
   opacity: 0.5;
 }
-
-.send-btn:hover {
-  opacity: 1;
-}
+.send-btn:hover { opacity: 1; }
 
 .chat-footer {
   padding: 10px 16px;
-  border-top: 1px solid currentColor20;
+  border-top: 1px solid var(--border);
   font-size: 9px;
   text-align: center;
   opacity: 0.3;
 }
 
-/* REMOTE SCREEN */
-.remote-screen-container {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 80vw !important;
-  height: 80vh !important;
-  background: #000 !important;
-  border: 2px solid currentColor !important;
-  z-index: 10000 !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color); opacity: 0.3; }
 
-.remote-screen-container video {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-}
-
-/* SCROLLBAR */
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: currentColor;
-  opacity: 0.3;
-}
-
-/* RESPONSIVE */
+/* Responsive */
 @media (max-width: 1000px) {
-  .app {
-    grid-template-columns: 220px 1fr 300px;
-  }
+  .app { grid-template-columns: 220px 1fr 300px; }
 }
-
 @media (max-width: 768px) {
-  .app {
-    grid-template-columns: 1fr;
-  }
-  .sidebar, .chat {
-    display: none;
-  }
+  .app { grid-template-columns: 1fr; }
+  .sidebar, .chat { display: none; }
 }
