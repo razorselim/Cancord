@@ -2,40 +2,110 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <title>Cancord</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CANCORD | encrypted terminal</title>
   <link rel="stylesheet" href="./styles/dark.css" />
   <link rel="icon" type="image/x-icon" href="./favicon.jpg">
-
-  <!-- socket.io client -->
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
-<body>
+<body class="theme-terminal">
   <div class="app">
-
+    
+    <!-- SOL PANEL -->
     <aside class="sidebar">
-      <h2>CONNECTED_NODES</h2>
-      <div id="users"></div>
+      <div class="logo">
+        <span class="logo-symbol">✦</span>
+        <span class="logo-text">CANCORD</span>
+        <span class="logo-version">v1.0</span>
+      </div>
+      
+      <!-- TEMA SEÇİCİ -->
+      <div class="theme-panel">
+        <div class="theme-label">⌘ THEMES</div>
+        <div class="theme-buttons">
+          <button class="theme-btn" data-theme="terminal">01</button>
+          <button class="theme-btn" data-theme="white">02</button>
+          <button class="theme-btn" data-theme="aviation">03</button>
+          <button class="theme-btn" data-theme="casino">04</button>
+        </div>
+        <div class="theme-names">
+          <span>TERMINAL</span>
+          <span>WHITE</span>
+          <span>AVIATION</span>
+          <span>CASINO</span>
+        </div>
+      </div>
+      
+      <div class="divider"></div>
+      
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-dot"></span>
+          <span id="userCount">0</span>
+          <span>online</span>
+        </div>
+        <div class="stat-item">
+          <span>🔒</span>
+          <span>encrypted</span>
+        </div>
+      </div>
+      
+      <div id="users" class="user-list"></div>
+      
+      <div class="sidebar-footer">
+        <div class="connection">
+          <span class="pulse"></span>
+          <span>SECURE</span>
+        </div>
+      </div>
     </aside>
 
+    <!-- ORTA ALAN -->
     <main class="main">
-
-      <!-- 🔴 SCREEN SHARE AREA -->
+      <div class="screen-header">
+        <span>▶ SCREEN_SHARE</span>
+        <span class="peer-badge">P2P</span>
+      </div>
+      
       <div id="screenContainer">
         <video id="screenVideo" autoplay muted></video>
+        <div class="no-signal">
+          <span class="no-signal-text">NO SIGNAL</span>
+          <span class="no-signal-sub">waiting for stream...</span>
+        </div>
       </div>
 
       <div class="controls">
-        <button id="micBtn">🎤 Mic</button>
-        <button id="screenBtn">🖥️ Screen</button>
+        <button id="micBtn" class="ctrl-btn">
+          <span>🎤</span>
+          <span>MIC</span>
+        </button>
+        <button id="screenBtn" class="ctrl-btn">
+          <span>🖥️</span>
+          <span>SHARE</span>
+        </button>
+      </div>
+      
+      <div class="sysinfo">
+        <span>● channel: room-1</span>
+        <span id="timestamp"></span>
       </div>
     </main>
 
+    <!-- SAĞ PANEL / CHAT -->
     <section class="chat">
+      <div class="chat-header">
+        <span>📡 CHAT</span>
+        <span class="encrypt-badge">AES-256</span>
+      </div>
       <div id="messages" class="messages"></div>
-      <div class="input">
-        <input id="chatInput" placeholder="type_message..." />
-        <button id="sendBtn">&gt;</button>
+      <div class="input-wrapper">
+        <span class="input-cursor">&gt;</span>
+        <input id="chatInput" type="text" placeholder="type message..." autocomplete="off">
+        <button id="sendBtn" class="send-btn">↵</button>
+      </div>
+      <div class="chat-footer">
+        <span>end-to-end encrypted</span>
       </div>
     </section>
 

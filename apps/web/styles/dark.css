@@ -1,190 +1,629 @@
-/* dark.css - DÜZELTİLMİŞ VERSİYON */
+/* dark.css - 4 THEMES: TERMINAL | WHITE | AVIATION | CASINO */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: monospace;
 }
 
 body {
-  background: black;
-  color: #22c55e;
+  font-family: 'Space Mono', 'Courier New', monospace;
   height: 100vh;
   overflow: hidden;
+  transition: all 0.2s ease;
 }
 
 .app {
   display: grid;
-  grid-template-columns: 240px 1fr 300px;
+  grid-template-columns: 260px 1fr 340px;
   height: 100%;
 }
 
-/* ======================
-   SIDEBAR
-====================== */
-.sidebar {
-  border-right: 1px solid #0f0f0f;
-  padding: 16px;
+/* ============================================
+   TEMA 1: TERMINAL (yeşil siyah)
+============================================ */
+body.theme-terminal {
+  background: #0a0a0a;
+  color: #0f0;
 }
 
-.sidebar h2 {
-  font-size: 14px;
-  margin-bottom: 12px;
+body.theme-terminal .sidebar,
+body.theme-terminal .chat,
+body.theme-terminal .main {
+  background: #050505;
+}
+
+body.theme-terminal .ctrl-btn {
+  border-color: #0f0;
+  color: #0f0;
+}
+
+body.theme-terminal .ctrl-btn:hover {
+  background: #0f0;
+  color: #000;
+}
+
+body.theme-terminal .message.me {
+  color: #0f0;
+  border-right-color: #0f0;
+}
+
+body.theme-terminal .logo-symbol {
+  color: #0f0;
+}
+
+body.theme-terminal .theme-btn.active {
+  border-color: #0f0;
+  color: #0f0;
+}
+
+/* ============================================
+   TEMA 2: WHITE (beyaz siyah)
+============================================ */
+body.theme-white {
+  background: #ffffff;
+  color: #000000;
+}
+
+body.theme-white .sidebar,
+body.theme-white .chat,
+body.theme-white .main {
+  background: #f5f5f5;
+  border-color: #e0e0e0;
+}
+
+body.theme-white .ctrl-btn {
+  border-color: #000;
+  color: #000;
+}
+
+body.theme-white .ctrl-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+body.theme-white .message.me {
+  color: #000;
+  border-right-color: #000;
+}
+
+body.theme-white .message.other {
+  color: #555;
+}
+
+body.theme-white .logo-symbol {
+  color: #000;
+}
+
+body.theme-white .theme-btn.active {
+  border-color: #000;
+  color: #000;
+}
+
+body.theme-white .user-list div {
+  border-left-color: #000;
+}
+
+/* ============================================
+   TEMA 3: AVIATION (gökyüzü mavi + pilot)
+============================================ */
+body.theme-aviation {
+  background: #0a2a3a;
+  color: #ffcc00;
+}
+
+body.theme-aviation .sidebar,
+body.theme-aviation .chat,
+body.theme-aviation .main {
+  background: #0d2f40;
+  border: 1px solid #ffcc00;
+}
+
+body.theme-aviation .logo {
+  background: #ffcc00;
+  color: #0a2a3a;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+body.theme-aviation .logo-symbol {
+  color: #0a2a3a;
+}
+
+body.theme-aviation .ctrl-btn {
+  border: 2px solid #ffcc00;
+  color: #ffcc00;
+  background: transparent;
+  letter-spacing: 1px;
+}
+
+body.theme-aviation .ctrl-btn:hover {
+  background: #ffcc00;
+  color: #0a2a3a;
+  transform: scale(1.02);
+}
+
+body.theme-aviation .message.me {
+  color: #ffcc00;
+  border-right: 3px solid #ffcc00;
+}
+
+body.theme-aviation .message.other {
+  color: #88ddff;
+}
+
+body.theme-aviation .user-list div {
+  border-left: 2px solid #ffcc00;
+}
+
+body.theme-aviation .peer-badge {
+  background: #ffcc00;
+  color: #0a2a3a;
+}
+
+body.theme-aviation .theme-btn.active {
+  border-color: #ffcc00;
+  color: #ffcc00;
+}
+
+body.theme-aviation .stat-dot {
+  background: #ffcc00;
+}
+
+/* ============================================
+   TEMA 4: CASINO (kırmızı siyah altın)
+============================================ */
+body.theme-casino {
+  background: #1a0000;
+  color: #ffd700;
+}
+
+body.theme-casino .sidebar,
+body.theme-casino .chat,
+body.theme-casino .main {
+  background: #0a0000;
+  border: 1px solid #ffd700;
+  box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.05);
+}
+
+body.theme-casino .logo {
+  background: #ffd700;
+  color: #1a0000;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+body.theme-casino .logo-symbol {
+  color: #1a0000;
+}
+
+body.theme-casino .ctrl-btn {
+  border: 2px solid #ffd700;
+  color: #ffd700;
+  background: #1a0000;
+}
+
+body.theme-casino .ctrl-btn:hover {
+  background: #ffd700;
+  color: #1a0000;
+  box-shadow: 0 0 15px #ffd700;
+}
+
+body.theme-casino .message.me {
+  color: #ffd700;
+  border-right: 3px solid #ffd700;
+}
+
+body.theme-casino .message.other {
+  color: #ff8888;
+}
+
+body.theme-casino .user-list div {
+  border-left: 2px solid #ffd700;
+}
+
+body.theme-casino .peer-badge {
+  background: #ffd700;
+  color: #1a0000;
+}
+
+body.theme-casino .theme-btn.active {
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+body.theme-casino .stat-dot {
+  background: #ffd700;
+}
+
+body.theme-casino .no-signal-text {
+  text-shadow: 0 0 10px #ffd700;
+}
+
+/* ============================================
+   ORTAK STİLLER
+============================================ */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+  border-right: 1px solid currentColor20;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.logo-symbol {
+  font-size: 24px;
+}
+
+.logo-version {
+  font-size: 9px;
+  opacity: 0.5;
+  margin-left: auto;
+}
+
+.theme-panel {
+  margin-bottom: 20px;
+}
+
+.theme-label {
+  font-size: 10px;
+  opacity: 0.5;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.theme-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.theme-btn {
+  width: 48px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid currentColor30;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.15s;
+  color: inherit;
+}
+
+.theme-btn:hover {
+  transform: translateY(-2px);
+}
+
+.theme-btn.active {
+  border-width: 2px;
+}
+
+.theme-names {
+  display: flex;
+  gap: 8px;
+  font-size: 8px;
+  opacity: 0.4;
+  letter-spacing: 0.5px;
+}
+
+.theme-names span {
+  width: 48px;
+  text-align: center;
+}
+
+.divider {
+  height: 1px;
+  background: currentColor20;
+  margin: 16px 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 11px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-dot {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.user-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.user-list div {
+  padding: 10px 12px;
+  border-left: 2px solid currentColor;
+  font-size: 12px;
+  transition: 0.1s;
+}
+
+.user-list div:hover {
+  transform: translateX(4px);
   opacity: 0.8;
 }
 
-/* ======================
-   MAIN AREA
-====================== */
-.main {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid currentColor20;
 }
 
-/* ======================
-   SCREEN SHARE
-====================== */
-#screenContainer {
-  flex: 1;
+.connection {
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: #000;
-  border: 1px solid #0f0f0f;
-  margin-bottom: 10px;
-  position: relative;
-  min-height: 400px;
-}
-
-/* NO SIGNAL yazısı */
-#screenContainer::after {
-  content: "NO SIGNAL";
-  position: absolute;
-  color: #033;
-  font-size: 20px;
-  letter-spacing: 2px;
+  gap: 8px;
+  font-size: 10px;
   opacity: 0.5;
 }
 
-/* video gelince yazıyı kapat */
-#screenContainer.active::after {
-  display: none;
+.pulse {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+/* MAIN */
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.screen-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 11px;
+  opacity: 0.6;
+  padding: 0 4px;
+}
+
+.peer-badge {
+  padding: 2px 8px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: 9px;
+}
+
+#screenContainer {
+  flex: 1;
+  background: #000;
+  border: 1px solid currentColor20;
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-signal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
+
+.no-signal-text {
+  font-size: 32px;
+  letter-spacing: 6px;
+  opacity: 0.3;
+  display: block;
+}
+
+.no-signal-sub {
+  font-size: 11px;
+  opacity: 0.2;
+  display: block;
+  margin-top: 10px;
 }
 
 #screenVideo {
   max-width: 100%;
-  max-height: 65vh;
-  border: 2px solid #22c55e;
-  box-shadow: 0 0 25px rgba(34,197,94,0.6);
+  max-height: 100%;
   display: none;
+  object-fit: contain;
 }
 
 #screenVideo.active {
   display: block;
 }
 
-/* ======================
-   CONTROLS
-====================== */
 .controls {
-  padding: 10px;
   display: flex;
   gap: 12px;
   justify-content: center;
+  margin: 20px 0;
 }
 
-button {
-  background: black;
-  color: #22c55e;
-  border: 1px solid #0f0f0f;
-  padding: 8px 14px;
+.ctrl-btn {
+  background: transparent;
+  border: 1px solid currentColor;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: 0.2s;
-  border-radius: 4px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  transition: all 0.15s;
+  color: inherit;
 }
 
-button:hover {
-  border-color: #22c55e;
-  box-shadow: 0 0 10px #22c55e55;
-  transform: translateY(-1px);
+.ctrl-btn:hover {
+  transform: translateY(-2px);
 }
 
-button.active {
-  background: #022;
-  border-color: #22c55e;
+.ctrl-btn.active {
+  background: currentColor;
+  color: inherit;
 }
 
-/* ======================
-   CHAT
-====================== */
+.sysinfo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  opacity: 0.4;
+  border-top: 1px solid currentColor20;
+  padding-top: 12px;
+  margin-top: auto;
+}
+
+/* CHAT */
 .chat {
-  border-left: 1px solid #0f0f0f;
   display: flex;
   flex-direction: column;
+  border-left: 1px solid currentColor20;
+}
+
+.chat-header {
+  padding: 20px;
+  border-bottom: 1px solid currentColor20;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.encrypt-badge {
+  font-size: 9px;
+  opacity: 0.5;
 }
 
 .messages {
   flex: 1;
-  padding: 12px;
+  padding: 16px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .message {
-  margin-bottom: 8px;
-  padding: 6px 10px;
-  border-radius: 4px;
-  background: #0a0a0a;
+  padding: 8px 12px;
+  font-size: 12px;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .message.me {
-  color: #22c55e;
-  border-left: 3px solid #22c55e;
+  text-align: right;
+  border-right: 2px solid currentColor;
 }
 
 .message.other {
-  color: #4ade80;
-  border-left: 3px solid #4ade80;
+  border-left: 2px solid currentColor;
+  opacity: 0.8;
 }
 
 .message.system {
-  color: #666;
+  text-align: center;
   font-style: italic;
-  background: transparent;
+  font-size: 10px;
+  opacity: 0.4;
 }
 
-.input {
+.input-wrapper {
   display: flex;
-  border-top: 1px solid #0f0f0f;
+  align-items: center;
+  border-top: 1px solid currentColor20;
+  padding: 12px 16px;
+  gap: 8px;
 }
 
-input {
+.input-cursor {
+  font-weight: 700;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+#chatInput {
   flex: 1;
-  background: black;
+  background: transparent;
   border: none;
-  color: #22c55e;
-  padding: 10px;
+  font-family: inherit;
+  font-size: 12px;
   outline: none;
+  color: inherit;
 }
 
-/* ======================
-   REMOTE SCREEN CONTAINER (YENİ VE DÜZENLİ)
-====================== */
+#chatInput::placeholder {
+  opacity: 0.3;
+}
+
+.send-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.5;
+}
+
+.send-btn:hover {
+  opacity: 1;
+}
+
+.chat-footer {
+  padding: 10px 16px;
+  border-top: 1px solid currentColor20;
+  font-size: 9px;
+  text-align: center;
+  opacity: 0.3;
+}
+
+/* REMOTE SCREEN */
 .remote-screen-container {
   position: fixed !important;
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
-  width: 85vw !important;
-  height: 85vh !important;
-  background: rgba(0, 0, 0, 0.95) !important;
-  border: 3px solid #22c55e !important;
-  border-radius: 12px !important;
+  width: 80vw !important;
+  height: 80vh !important;
+  background: #000 !important;
+  border: 2px solid currentColor !important;
   z-index: 10000 !important;
   display: flex !important;
   flex-direction: column !important;
-  overflow: hidden !important;
-  box-shadow: 0 0 40px rgba(34, 197, 94, 0.4) !important;
 }
 
 .remote-screen-container video {
@@ -193,32 +632,32 @@ input {
   object-fit: contain !important;
 }
 
-/* Responsive */
-@media (max-width: 1200px) {
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: currentColor;
+  opacity: 0.3;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
   .app {
-    grid-template-columns: 200px 1fr 250px;
-  }
-  
-  .remote-screen-container {
-    width: 90vw !important;
-    height: 80vh !important;
+    grid-template-columns: 220px 1fr 300px;
   }
 }
 
 @media (max-width: 768px) {
   .app {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
   }
-  
   .sidebar, .chat {
     display: none;
-  }
-  
-  .remote-screen-container {
-    width: 95vw !important;
-    height: 70vh !important;
-    top: 15px !important;
-    transform: translateX(-50%) !important;
   }
 }
