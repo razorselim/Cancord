@@ -9,6 +9,48 @@
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 <body class="theme-terminal">
+
+  <!-- GİRİŞ MODALI - TERMINAL USULÜ -->
+  <div id="authModal" class="auth-modal">
+    <div class="terminal-frame">
+      <div class="terminal-title-bar">
+        <div class="terminal-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="terminal-title">cancord@login:~</span>
+      </div>
+      <div class="terminal-content">
+        <div class="terminal-line">
+          <span>$></span>
+          <span>cancord terminal v2.0</span>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login">login</button>
+          <button class="auth-tab" data-tab="register">register</button>
+        </div>
+
+        <div id="loginPanel" class="auth-panel active">
+          <input type="text" id="loginUsername" placeholder="username" class="auth-input">
+          <input type="password" id="loginPassword" placeholder="password" class="auth-input">
+          <button id="loginBtn" class="auth-btn">[ ENTER ]</button>
+          <div id="loginError" class="auth-error"></div>
+        </div>
+
+        <div id="registerPanel" class="auth-panel">
+          <input type="text" id="regUsername" placeholder="username (min 3)" class="auth-input">
+          <input type="password" id="regPassword" placeholder="password (min 4)" class="auth-input">
+          <button id="registerBtn" class="auth-btn">[ REGISTER ]</button>
+          <div id="regError" class="auth-error"></div>
+        </div>
+      </div>
+      <div class="terminal-footer">
+        <span>● SECURE CONNECTION</span>
+        <span>AES-256</span>
+      </div>
+    </div>
+  </div>
+
   <div class="app">
     
     <!-- SOL PANEL -->
@@ -111,6 +153,27 @@
 
   </div>
 
+  
+
+  <!-- Arkaplan Müziği -->
+<audio id="bgMusic" loop style="display:none;">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
   <script type="module" src="./main.js"></script>
+  <script>
+    // Müzik kontrolü - sayfaya ilk tıklamada başlasın
+    const music = document.getElementById('bgMusic');
+    music.volume = 0.15;
+    
+    function startMusic() {
+      music.play().catch(e => console.log('Müzik çalışmadı'));
+      document.removeEventListener('click', startMusic);
+      document.removeEventListener('keydown', startMusic);
+    }
+    
+    document.addEventListener('click', startMusic);
+    document.addEventListener('keydown', startMusic);
+  </script>
 </body>
 </html>

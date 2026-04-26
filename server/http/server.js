@@ -4,11 +4,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
+import bcrypt from "bcrypt";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// SQLite veritabanı bağlantısı
 let db;
 
 async function initDB() {
@@ -17,7 +17,7 @@ async function initDB() {
     driver: sqlite3.Database
   });
   
-  // Mesajlar tablosunu oluştur
+  // Mesajlar tablosu
   await db.exec(`
     CREATE TABLE IF NOT EXISTS messages (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,29 +28,81 @@ async function initDB() {
     )
   `);
   
-  console.log("✅ SQLite veritabanı hazır");
+  // Kullanıcılar tablosu
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  
+  console.log("✅ SQLite veritabanı hazır (messages + users)");
 }
 
-// Veritabanını başlat
 initDB();
 
 export function createHttpServer() {
   const app = express();
   const server = http.createServer(app);
   
-  // JSON body parser
   app.use(express.json());
   
-  // Statik dosyalar
   const webPath = path.join(__dirname, "../../apps/web");
   app.use(express.static(webPath));
   
-  // Ana sayfa
   app.get("/", (_, res) => {
     res.sendFile(path.join(webPath, "index.html"));
   });
   
-  // Mesaj geçmişini getir (son 50 mesaj)
+  // ========== KAYIT ==========
+  app.post("/api/register", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      if (!username || !password) {
+        return res.status(400).json({ error: "Kullanıcı adı ve şifre gerekli" });
+      }
+      if (username.length < 3) {
+        return res.status(400).json({ error: "Kullanıcı adı en az 3 karakter" });
+      }
+      if (password.length < 4) {
+        return res.status(400).json({ error: "Şifre en az 4 karakter" });
+      }
+      
+      const hashed = await bcrypt.hash(password, 10);
+      await db.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, hashed]);
+      res.json({ success: true, message: "Kayıt başarılı" });
+    } catch (error) {
+      if (error.message.includes("UNIQUE")) {
+        res.status(400).json({ error: "Bu kullanıcı adı zaten alınmış" });
+      } else {
+        res.status(500).json({ error: error.message });
+      }
+    }
+  });
+  
+  // ========== GİRİŞ ==========
+  app.post("/api/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      const user = await db.get("SELECT * FROM users WHERE username = ?", [username]);
+      if (!user) {
+        return res.status(401).json({ error: "Kullanıcı bulunamadı" });
+      }
+      
+      const valid = await bcrypt.compare(password, user.password);
+      if (!valid) {
+        return res.status(401).json({ error: "Şifre hatalı" });
+      }
+      
+      res.json({ success: true, username: user.username });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // ========== MESAJ GEÇMİŞİ ==========
   app.get("/api/messages/:roomId", async (req, res) => {
     try {
       const { roomId } = req.params;
@@ -60,22 +112,20 @@ export function createHttpServer() {
       );
       res.json(messages.reverse());
     } catch (error) {
-      console.error("Mesaj getirme hatası:", error);
       res.status(500).json({ error: error.message });
     }
   });
   
-  // Mesaj kaydet (socket.io'dan da çağrılacak)
+  // ========== MESAJ KAYDET ==========
   app.post("/api/messages", async (req, res) => {
     try {
       const { roomId, username, message } = req.body;
-      const result = await db.run(
+      await db.run(
         "INSERT INTO messages (room_id, username, message) VALUES (?, ?, ?)",
         [roomId, username, message]
       );
-      res.json({ id: result.lastID });
+      res.json({ success: true });
     } catch (error) {
-      console.error("Mesaj kaydetme hatası:", error);
       res.status(500).json({ error: error.message });
     }
   });

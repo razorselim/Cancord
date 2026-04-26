@@ -1,4 +1,4 @@
-/* dark.css - SCROLL DÜZELTİLDİ */
+/* dark.css - GİRİŞ MODAL STİLLİ */
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
 * {
@@ -19,6 +19,175 @@ body {
   grid-template-columns: 260px 1fr 340px;
   height: 100vh;
   overflow: hidden;
+}
+
+/* ========== GİRİŞ MODALI - TERMINAL USULÜ ========== */
+.auth-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a0c10;
+  z-index: 20000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.terminal-frame {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 440px;
+  max-width: 90%;
+}
+
+.terminal-title-bar {
+  background: #161b22;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #30363d;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 8px;
+}
+.terminal-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.terminal-dots span:nth-child(1) { background: #ff5f56; }
+.terminal-dots span:nth-child(2) { background: #ffbd2e; }
+.terminal-dots span:nth-child(3) { background: #27c93f; }
+
+.terminal-title {
+  color: #8b949e;
+  font-size: 12px;
+  font-family: monospace;
+  margin-left: 8px;
+}
+
+.terminal-content {
+  padding: 32px 28px;
+}
+
+.terminal-line {
+  color: #58a6ff;
+  font-size: 13px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: monospace;
+}
+.terminal-line span:first-child {
+  color: #7ee787;
+}
+.terminal-line span:last-child::after {
+  content: "█";
+  animation: blink 1s step-end infinite;
+  margin-left: 4px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 28px;
+  background: #161b22;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.auth-tab {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  color: #8b949e;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 12px;
+  border-radius: 6px;
+  flex: 1;
+}
+
+.auth-tab.active {
+  background: #21262d;
+  color: #7ee787;
+}
+
+.auth-panel {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-panel.active {
+  display: flex;
+}
+
+.auth-input {
+  background: transparent;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  padding: 12px 14px;
+  color: #e6edf3;
+  font-family: monospace;
+  font-size: 13px;
+  outline: none;
+}
+
+.auth-input:focus {
+  border-color: #58a6ff;
+}
+
+.auth-input::placeholder {
+  color: #3b434c;
+}
+
+.auth-btn {
+  background: #21262d;
+  color: #e6edf3;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.auth-btn:hover {
+  background: #30363d;
+  border-color: #7ee787;
+}
+
+.auth-error {
+  color: #f85149;
+  font-size: 11px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.terminal-footer {
+  border-top: 1px solid #21262d;
+  padding: 10px 16px;
+  background: #161b22;
+  font-size: 10px;
+  color: #3b434c;
+  display: flex;
+  justify-content: space-between;
+  font-family: monospace;
 }
 
 /* ========== TEMA DEĞİŞKENLERİ ========== */
@@ -137,7 +306,7 @@ body.theme-casino { background: #1a0000; color: var(--color); }
   align-items: center;
 }
 
-/* ========== NO SIGNAL - KESİN ORTADA ========== */
+/* ========== NO SIGNAL ========== */
 .no-signal {
   position: absolute !important;
   top: 50% !important;
@@ -210,7 +379,7 @@ body.theme-casino { background: #1a0000; color: var(--color); }
   flex-shrink: 0;
 }
 
-/* ========== CHAT - SCROLL ÇALIŞACAK ========== */
+/* ========== CHAT ========== */
 .chat {
   display: flex;
   flex-direction: column;
@@ -307,5 +476,5 @@ body.theme-casino { background: #1a0000; color: var(--color); }
     height: 100vh;
   }
   .sidebar, .chat { display: none; }
+  .auth-container { width: 90%; margin: 0 20px; }
 }
-
